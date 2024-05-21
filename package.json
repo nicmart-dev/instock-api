@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/nicmart-dev/instock-api.git"
   },
-  "author": "Nicolas Martinez",
+  "author": "Nicolas Martinez, Mary Chen, Yuxin Zeng, Benjamin Ayesu-Attah, Sam Alexander",
   "license": "ISC",
   "bugs": {
     "url": "https://brainstationeducation.atlassian.net/browse/RR"
