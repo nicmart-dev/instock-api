@@ -1,0 +1,28 @@
+{
+  "name": "instock-api",
+  "version": "1.0.0",
+  "description": "InStock API server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicmart-dev/instock-api.git"
+  },
+  "author": "Nicolas Martinez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://brainstationeducation.atlassian.net/browse/RR"
+  },
+  "homepage": "https://github.com/nicmart-dev/instock-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "nodemon": "^3.1.0"
+  }
+}
