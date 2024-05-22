@@ -17,9 +17,7 @@ const remove = async (req, res) => {
         }
         console.log('Deleted ID: ', req.params.id);
         // No Content response
-        res.sendStatus(204).json({
-            message: `Warehouse with ID ${req.params.id} successfully deleted.`,
-        });
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json({
             message: `Unable to delete user: ${error}`,
@@ -27,6 +25,21 @@ const remove = async (req, res) => {
     }
 };
 
+const inventories = async (req, res) => {
+    try {
+        const posts = await knex('warehouses')
+            .join('inventories', 'inventories.warehouse_id', 'warehouses.id')
+            .where({ warehouse_id: req.params.id });
+
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(404).json({
+            message: `Unable inventory of warehouse ID ${req.params.id}: ${error}`,
+        });
+    }
+};
+
 module.exports = {
     remove,
+    inventories,
 };
