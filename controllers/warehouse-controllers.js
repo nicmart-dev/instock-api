@@ -17,7 +17,9 @@ const remove = async (req, res) => {
         }
         console.log('Deleted ID: ', req.params.id);
         // No Content response
-        res.sendStatus(204);
+        res.sendStatus(204).json({
+            message: `Warehouse with ID ${req.params.id} successfully deleted.`,
+        });
     } catch (error) {
         res.status(500).json({
             message: `Unable to delete user: ${error}`,
