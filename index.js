@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const inventoryRoute = require("./routes/inventory");
+const inventoryRoute = require("./routes/inventory-route");
 const warehousesRoute = require("./routes/warehouses");
 require("dotenv").config(); // load environment variables from a .env file into process.env
 
