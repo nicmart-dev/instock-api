@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "nodemon index.js",
+    "db:migrate": "knex migrate:latest",
+    "db:seed": "knex seed:run",
     "migrate:make": "knex migrate:make",
     "migrate": "knex migrate:latest",
     "migrate:down": "knex migrate:down",
@@ -32,5 +34,8 @@
     "knex": "^3.1.0",
     "mysql2": "^3.6.1",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
