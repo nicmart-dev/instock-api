@@ -70,5 +70,6 @@ const inventory = async (req, res) => {
 module.exports = {
   remove,
   inventory,
+
   index,
 };
