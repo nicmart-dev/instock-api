@@ -74,7 +74,7 @@ const add = async (req, res) => {
 
     // check if warehouse id exists
     const warehouseExist = await knex("warehouses").where({ id: warehouse_id });
-    if (!warehouseExist) {
+    if (warehouseExist.length === 0) {
       return res.status(400).json({ message: "Invalid warehouse id" });
     }
 
