@@ -27,7 +27,15 @@ const findOne = async (req, res) => {
     // call for item
     const item = await knex("inventories")
       .join("warehouses", "warehouses.id", "inventories.warehouse_id") // warehouse id from inventory table
-      .select("inventories.*", "warehouses.warehouse_name") // select everything from inventory and warehouse name
+      .select(
+        "inventories.id",
+        "warehouses.warehouse_name",
+        "inventories.item_name",
+        "inventories.description",
+        "inventories.category",
+        "inventories.status",
+        "inventories.quantity"
+      )
       .where({ "inventories.id": req.params.id })
       .first();
 
