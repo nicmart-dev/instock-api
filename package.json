@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/nicmart-dev/instock-api.git"
   },
-  "author": "Nicolas Martinez, Mary Chen, Yuxin Zeng, Benjamin Ayesu-Attah, Sam Alexander",
+  "author": "Nicolas Martinez, Mary Chen, Yuxin Zeng, Benjamin Ayesu-Attah, Sam Alexander, Sarah Gee",
   "license": "ISC",
   "bugs": {
     "url": "https://brainstationeducation.atlassian.net/browse/RR"
@@ -33,7 +33,7 @@
 
     "express": "^4.18.2",
     "knex": "^3.1.0",
-    "mysql2": "^3.6.1",
+    "mysql2": "^3.9.7",
     "nodemon": "^3.1.0"
   },
   "devDependencies": {
