@@ -7,8 +7,8 @@ const { PORT, BACKEND_URL, NODE_ENV } = process.env; // Destructure process.env
 
 router.route('/').get(warehouseController.index);
 
-router.route('/:id').delete(warehouseController.remove);
+router.route("/:id").delete(warehouseController.remove);
 
-router.route('/:id/warehouses').get(warehouseController.inventory);
+router.route('/:id/inventory').get(warehouseController.inventory);
 
 module.exports = router;
