@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
+const warehouseController = require("../controllers/warehouse-controller");
 
-require('dotenv').config(); // Ensure environment variables are available
-const { PORT, BACKEND_URL, NODE_ENV } = process.env; // Destructure process.env
+require('dotenv').config(); 
+const { PORT, BACKEND_URL, NODE_ENV } = process.env; 
 
+router.route("/").get(warehouseController.index);
 
 module.exports = router;
