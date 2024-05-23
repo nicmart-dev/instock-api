@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const cors = require('cors');
 const inventoryRoute = require('./routes/inventory-route');
 const warehousesRoute = require('./routes/warehouses-route');
@@ -10,6 +11,7 @@ const { PORT } = process.env; // destructuring assignment of PORT from process.e
 // middleware
 app.use(express.json()); // parses incoming requests specifically req.body
 app.use(cors()); // allow * / all to access our api. All domains, ips, ports
+
 
 app.use('/api/warehouses', warehousesRoute);
 app.use('/api/inventory', inventoryRoute);
