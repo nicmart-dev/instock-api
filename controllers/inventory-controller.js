@@ -67,7 +67,7 @@ const add = async (req, res) => {
       !description ||
       !category ||
       !status ||
-      !quantity
+      quantity === undefined
     ) {
       return res.status(400).json({ message: "Missing some data in request" });
     }
@@ -95,7 +95,7 @@ const add = async (req, res) => {
       quantity,
     };
 
-    res.status(201).json({ newItem });
+    res.status(201).json(newItem);
   } catch (error) {
     res.status(500).json({ message: "Unable to create new item" });
   }
