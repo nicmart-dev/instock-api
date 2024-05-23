@@ -3,6 +3,7 @@
 
 const knex = require('knex')(require('../knexfile'));
 
+
 // get all warehouse items
 const index = async (_req, res) => {
   try {
@@ -23,6 +24,7 @@ const index = async (_req, res) => {
     res.status(400).send("Error retrieving warehouse items.");
   }
 };
+
 
 const remove = async (req, res) => {
     try {
@@ -71,6 +73,7 @@ const inventory = async (req, res) => {
 module.exports = {
     remove,
     inventory,
+
   index,
 };
 
