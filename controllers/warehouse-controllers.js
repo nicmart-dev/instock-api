@@ -29,7 +29,14 @@ const inventories = async (req, res) => {
     try {
         const posts = await knex('warehouses')
             .join('inventories', 'inventories.warehouse_id', 'warehouses.id')
-            .where({ warehouse_id: req.params.id });
+            .where({ warehouse_id: req.params.id })
+            .select(
+                'inventories.id',
+                'inventories.item_name',
+                'inventories.category',
+                'inventories.status',
+                'inventories.quantity'
+            );
 
         res.status(200).json(posts);
     } catch (error) {
