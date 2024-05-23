@@ -12,7 +12,7 @@ app.use(express.json()); // parses incoming requests specifically req.body
 app.use(cors()); // allow * / all to access our api. All domains, ips, ports
 
 app.use('/api/warehouses', warehousesRoute);
-app.use('/api/inventories', inventoryRoute);
+app.use('/api/inventory', inventoryRoute);
 
 app.get('/', (_req, res) => {
     res.send('<h1>Welcome to the InStock API server!</h1>');
