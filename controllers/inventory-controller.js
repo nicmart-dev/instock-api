@@ -54,7 +54,55 @@ const findOne = async (req, res) => {
   }
 };
 
+// add an inventory item
+const add = async (req, res) => {
+  try {
+    const { warehouse_id, item_name, description, category, status, quantity } =
+      req.body;
+
+    // check if fields are empty
+    if (
+      !warehouse_id ||
+      !item_name ||
+      !description ||
+      !category ||
+      !status ||
+      !quantity
+    ) {
+      return res.status(400).json({ message: "Missing some data in request" });
+    }
+
+    // check if warehouse id exists
+    const warehouseExist = await knex("warehouses").where({ id: warehouse_id });
+    if (!warehouseExist) {
+      return res.status(400).json({ message: "Invalid warehouse id" });
+    }
+
+    // check if quantity is not a number
+    if (isNaN(quantity)) {
+      return res.status(400).json({ message: "quantity must be a number" });
+    }
+
+    const [newItemId] = await knex("inventories").insert(req.body);
+
+    const newItem = {
+      id: newItemId,
+      warehouse_id,
+      item_name,
+      description,
+      category,
+      status,
+      quantity,
+    };
+
+    res.status(201).json({ newItem });
+  } catch (error) {
+    res.status(500).json({ message: "Unable to create new item" });
+  }
+};
+
 module.exports = {
   index,
   findOne,
+  add,
 };
