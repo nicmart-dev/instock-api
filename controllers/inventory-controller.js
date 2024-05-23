@@ -1,23 +1,23 @@
-const knex = require('knex')(require('../knexfile'));
+const knex = require("knex")(require("../knexfile"));
 
 // get all inventory items
 const index = async (_req, res) => {
     try {
-        const items = await knex('inventories')
-            .join('warehouses', 'warehouses.id', 'inventories.warehouse_id')
+        const items = await knex("inventories")
+            .join("warehouses", "warehouses.id", "inventories.warehouse_id")
             .select(
-                'inventories.id',
-                'warehouses.warehouse_name',
-                'inventories.item_name',
-                'inventories.description',
-                'inventories.category',
-                'inventories.status',
-                'inventories.quantity'
+                "inventories.id",
+                "warehouses.warehouse_name",
+                "inventories.item_name",
+                "inventories.description",
+                "inventories.category",
+                "inventories.status",
+                "inventories.quantity"
             );
         res.status(200).json(items);
     } catch (err) {
         console.log(err);
-        res.status(400).send('Error retrieving inventory items.');
+        res.status(400).send("Error retrieving inventory items.");
     }
 };
 
@@ -25,23 +25,23 @@ const index = async (_req, res) => {
 const findOne = async (req, res) => {
     try {
         // call for item
-        const item = await knex('inventories')
-            .join('warehouses', 'warehouses.id', 'inventories.warehouse_id') // warehouse id from inventory table
+        const item = await knex("inventories")
+            .join("warehouses", "warehouses.id", "inventories.warehouse_id") // warehouse id from inventory table
             .select(
-                'inventories.id',
-                'warehouses.warehouse_name',
-                'inventories.item_name',
-                'inventories.description',
-                'inventories.category',
-                'inventories.status',
-                'inventories.quantity'
+                "inventories.id",
+                "warehouses.warehouse_name",
+                "inventories.item_name",
+                "inventories.description",
+                "inventories.category",
+                "inventories.status",
+                "inventories.quantity"
             )
-            .where({ 'inventories.id': req.params.id })
+            .where({ "inventories.id": req.params.id })
             .first();
 
         // check if item exists
         if (!item) {
-            return res.send('error getting the item:', req.params.id);
+            return res.send("error getting the item:", req.params.id);
         }
 
         // successful response call
@@ -57,7 +57,7 @@ const findOne = async (req, res) => {
 const remove = async (req, res) => {
     try {
         console.log(`Attempting to remove id: ${req.params.id}`);
-        const item = await knex('inventories')
+        const item = await knex("inventories")
             .where({ id: req.params.id })
             .delete();
 
