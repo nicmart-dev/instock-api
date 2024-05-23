@@ -54,6 +54,29 @@ const findOne = async (req, res) => {
   }
 };
 
+const remove = async (req, res) => {
+  try {
+    console.log(`Attempting to remove id: ${req.params.id}`);
+    const item = await knex("inventories")
+      .where({ id: req.params.id })
+      .delete();
+
+    if (item === 0) {
+      return res.status(404).json({
+        message: `Inventory with ID ${req.params.id} not found`,
+      });
+    }
+
+    console.log(`Successfully removed id: ${req.params.id}`);
+    // No Content response
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to delete inventory with ID ${req.params.id}: ${error}`,
+    });
+  }
+};
+
 // add an inventory item
 const add = async (req, res) => {
   try {
@@ -104,5 +127,6 @@ const add = async (req, res) => {
 module.exports = {
   index,
   findOne,
+  remove,
   add,
 };
