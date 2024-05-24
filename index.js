@@ -20,6 +20,7 @@ app.get('/', (_req, res) => {
     res.send('<h1>Welcome to the InStock API server!</h1>');
 });
 
+// boots up the server and listens on a specified port number
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });
