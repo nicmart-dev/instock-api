@@ -23,6 +23,31 @@ const index = async (_req, res) => {
   }
 };
 
+// get a single warehouse
+const getWarehouseById = async (req, res) => {
+  try {
+    console.log("Finding warehouse with ID:", req.params.id);
+    const warehouse = await knex("warehouses")
+      .where({ id: req.params.id })
+      .first();
+
+    if (!warehouse) {
+      console.log("Warehouse not found");
+      return res.status(404).json({
+        message: `Warehouse with ID ${req.params.id} not found`,
+      });
+    }
+
+    console.log("Found warehouse:", warehouse);
+    res.status(200).json(warehouse);
+  } catch (error) {
+    console.error("Error fetching warehouse details:", error);
+    res.status(500).json({
+      message: `Unable to fetch warehouse details: ${error}`,
+    });
+  }
+};
+
 const remove = async (req, res) => {
   try {
     console.log("Finding id: ", req.params.id);
@@ -71,4 +96,5 @@ module.exports = {
   remove,
   inventory,
   index,
+  getWarehouseById,
 };
