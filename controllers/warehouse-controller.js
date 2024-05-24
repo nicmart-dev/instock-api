@@ -92,9 +92,51 @@ const inventory = async (req, res) => {
   }
 };
 
+// add a new warehouse
+const addWarehouse = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {
+    warehouse_name,
+    address,
+    city,
+    country,
+    contact_name,
+    contact_position,
+    contact_phone,
+    contact_email,
+    created_at,
+    updated_at,
+  } = req.body;
+
+  try {
+    await knex("warehouses").insert({
+      warehouse_name,
+      address,
+      city,
+      country,
+      contact_name,
+      contact_position,
+      contact_phone,
+      contact_email,
+      created_at: created_at || new Date(),
+      updated_at: updated_at || new Date(),
+    });
+
+    res.status(201).json({ message: "Warehouse added successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   remove,
   inventory,
   index,
   getWarehouseById,
+  addWarehouse,
 };

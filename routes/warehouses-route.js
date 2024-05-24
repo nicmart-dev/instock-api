@@ -1,8 +1,10 @@
 // routes/warehouses-route.js
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 const warehouseController = require("../controllers/warehouse-controller");
+
+const { warehouseValidationRules } = require('../validators/warehouseValidators');
 
 require("dotenv").config(); // Ensure environment variables are available
 const { PORT, BACKEND_URL, NODE_ENV } = process.env; // Destructure process.env
@@ -15,5 +17,11 @@ router
   .delete(warehouseController.remove);
 
 router.route("/:id/inventory").get(warehouseController.inventory);
+
+router.post(
+  "/api/warehouses",
+  warehouseValidationRules,
+  warehouseController.addWarehouse
+);
 
 module.exports = router;
