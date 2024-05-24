@@ -114,20 +114,23 @@ const addWarehouse = async (req, res) => {
   } = req.body;
 
   try {
-    const [newWarehouse] = await knex("warehouses")
-      .insert({
-        warehouse_name,
-        address,
-        city,
-        country,
-        contact_name,
-        contact_position,
-        contact_phone,
-        contact_email,
-        created_at: created_at || new Date(),
-        updated_at: updated_at || new Date(),
-      })
-      .returning("*");
+    const [insertId] = await knex("warehouses").insert({
+      warehouse_name,
+      address,
+      city,
+      country,
+      contact_name,
+      contact_position,
+      contact_phone,
+      contact_email,
+      created_at: created_at || new Date(),
+      updated_at: updated_at || new Date(),
+    });
+    // .returning("*");
+
+    const newWarehouse = await knex("warehouses")
+      .where({ id: insertId })
+      .first();
 
     res.status(201).json(newWarehouse);
   } catch (error) {
