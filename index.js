@@ -16,11 +16,17 @@ app.use(cors()); // allow * / all to access our api. All domains, ips, ports
 app.use('/api/warehouses', warehousesRoute);
 app.use('/api/inventory', inventoryRoute);
 
-app.get('/', (_req, res) => {
-    res.send('<h1>Welcome to the InStock API server!</h1>');
+app.get('/api/inventory/:id', (req, res) => {
+    const id = parseInt(req.params.id); 
+    const foundItem = inventory.find(item => item.id === id);
+    if (foundItem) {
+      res.json(foundItem);
+    } else {
+      res.status(404).json({ error: 'Item not found' });
+    }
 });
 
-// boots up the server and listens on a specified port number
+
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });
