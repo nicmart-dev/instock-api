@@ -1,6 +1,7 @@
 //WAREHOUSE CONTROLLERS
 
 const knex = require("knex")(require("../knexfile"));
+const { validationResult } = require("express-validator");
 
 // get all warehouse items
 const index = async (_req, res) => {
@@ -92,9 +93,56 @@ const inventory = async (req, res) => {
   }
 };
 
+// add a new warehouse
+const addWarehouse = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {
+    warehouse_name,
+    address,
+    city,
+    country,
+    contact_name,
+    contact_position,
+    contact_phone,
+    contact_email,
+    created_at,
+    updated_at,
+  } = req.body;
+
+  try {
+    const [insertId] = await knex("warehouses").insert({
+      warehouse_name,
+      address,
+      city,
+      country,
+      contact_name,
+      contact_position,
+      contact_phone,
+      contact_email,
+      created_at: created_at || new Date(),
+      updated_at: updated_at || new Date(),
+    });
+    // .returning("*");
+
+    const newWarehouse = await knex("warehouses")
+      .where({ id: insertId })
+      .first();
+
+    res.status(201).json(newWarehouse);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   remove,
   inventory,
   index,
   getWarehouseById,
+  addWarehouse,
 };
