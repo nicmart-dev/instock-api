@@ -90,6 +90,74 @@ const update = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).send("Error updating inventory item.");
+
+const remove = async (req, res) => {
+  try {
+    console.log(`Attempting to remove id: ${req.params.id}`);
+    const item = await knex("inventories")
+      .where({ id: req.params.id })
+      .delete();
+
+    if (item === 0) {
+      return res.status(404).json({
+        message: `Inventory with ID ${req.params.id} not found`,
+      });
+    }
+
+    console.log(`Successfully removed id: ${req.params.id}`);
+    // No Content response
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to delete inventory with ID ${req.params.id}: ${error}`,
+    });
+  }
+};
+
+// add an inventory item
+const add = async (req, res) => {
+  try {
+    const { warehouse_id, item_name, description, category, status, quantity } =
+      req.body;
+
+    // check if fields are empty
+    if (
+      !warehouse_id ||
+      !item_name ||
+      !description ||
+      !category ||
+      !status ||
+      quantity === undefined
+    ) {
+      return res.status(400).json({ message: "Missing some data in request" });
+    }
+
+    // check if warehouse id exists
+    const warehouseExist = await knex("warehouses").where({ id: warehouse_id });
+    if (warehouseExist.length === 0) {
+      return res.status(400).json({ message: "Invalid warehouse id" });
+    }
+
+    // check if quantity is not a number
+    if (isNaN(quantity)) {
+      return res.status(400).json({ message: "quantity must be a number" });
+    }
+
+    const [newItemId] = await knex("inventories").insert(req.body);
+
+    const newItem = {
+      id: newItemId,
+      warehouse_id,
+      item_name,
+      description,
+      category,
+      status,
+      quantity,
+    };
+
+    res.status(201).json(newItem);
+  } catch (error) {
+    res.status(500).json({ message: "Unable to create new item" });
   }
 };
 
@@ -97,4 +165,6 @@ module.exports = {
   index,
   findOne,
   update,
+  remove,
+  add,
 };
