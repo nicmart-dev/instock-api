@@ -49,6 +49,49 @@ const getWarehouseById = async (req, res) => {
   }
 };
 
+//update a warehouse item
+const update = async (req, res) => {
+  try {
+    const updatedWareRows = await knex("warehouses")
+      .where({ id: req.params.id })
+      .update({
+        warehouse_name: req.body.warehouse_name,
+        address: req.body.address,
+        city: req.body.city,
+        country: req.body.country,
+        contact_name: req.body.contact_name,
+        contact_position: req.body.contact_position,
+        contact_phone: req.body.contact_phone,
+        contact_email: req.body.contact_email,
+      });
+
+    if (updatedWareRows === 0) {
+      return res.status(404).json({ error: "warehouse not found" });
+    }
+
+    const updatedItem = await knex("warehouses")
+      .select(
+        "warehouse.id",
+        "warehouse.warehouse_name",
+        "warehouse.warehouse.address",
+        "warehouse.warehouse.city",
+        "warehouse.warehouse.country",
+        "warehouse.warehouse.contact_name",
+        "warehouse.warehouse.contact_position",
+        "warehouse.warehouse.contact_phone",
+        "warehouse.warehouse.contact_email"
+      )
+      .where({ "warehouse.id": req.params.id })
+      .first();
+
+    res.status(200).json(updatedItem);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Error updating warehouse item");
+  }
+};
+
+
 const remove = async (req, res) => {
   try {
     console.log("Finding id: ", req.params.id);
@@ -145,4 +188,5 @@ module.exports = {
   index,
   getWarehouseById,
   addWarehouse,
+  update,
 };
