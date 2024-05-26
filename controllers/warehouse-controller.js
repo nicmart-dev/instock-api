@@ -52,6 +52,7 @@ const getWarehouseById = async (req, res) => {
 //update a warehouse item
 const update = async (req, res) => {
   try {
+    console.log("Updating warehouse with ID:", req.params.id);
     const updatedWareRows = await knex("warehouses")
       .where({ id: req.params.id })
       .update({
@@ -71,17 +72,17 @@ const update = async (req, res) => {
 
     const updatedItem = await knex("warehouses")
       .select(
-        "warehouse.id",
-        "warehouse.warehouse_name",
-        "warehouse.warehouse.address",
-        "warehouse.warehouse.city",
-        "warehouse.warehouse.country",
-        "warehouse.warehouse.contact_name",
-        "warehouse.warehouse.contact_position",
-        "warehouse.warehouse.contact_phone",
-        "warehouse.warehouse.contact_email"
+        "id",
+        "warehouse_name",
+        "address",
+        "city",
+        "country",
+        "contact_name",
+        "contact_position",
+        "contact_phone",
+        "contact_email"
       )
-      .where({ "warehouse.id": req.params.id })
+      .where({ id: req.params.id })
       .first();
 
     res.status(200).json(updatedItem);
