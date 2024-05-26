@@ -22,4 +22,6 @@ router.route("/:id/inventory").get(warehouseController.inventory);
 
 router.post("/", warehouseValidationRules, warehouseController.addWarehouse);
 
+router.route("/:id").put(warehouseController.update);
+
 module.exports = router;
