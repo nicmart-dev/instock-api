@@ -16,7 +16,8 @@ router.route("/").get(warehouseController.index);
 router
   .route("/:id")
   .get(warehouseController.getWarehouseById)
-  .delete(warehouseController.remove);
+  .delete(warehouseController.remove)
+  .put(warehouseController.update);
 
 router.route("/:id/inventory").get(warehouseController.inventory);
 
