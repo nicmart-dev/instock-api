@@ -54,6 +54,43 @@ const findOne = async (req, res) => {
   }
 };
 
+// update an inventory item
+const update = async (req, res) => {
+  try {
+    const updatedRows = await knex("inventories")
+      .where({ id: req.params.id })
+      .update({
+        item_name: req.body.item_name,
+        description: req.body.description,
+        category: req.body.category,
+        status: req.body.status,
+        quantity: req.body.quantity,
+        warehouse_id: req.body.warehouse_id
+      });
+
+    if (updatedRows === 0) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    const updatedItem = await knex("inventories")
+      .join("warehouses", "warehouses.id", "inventories.warehouse_id")
+      .select(
+        "inventories.id",
+        "warehouses.warehouse_name",
+        "inventories.item_name",
+        "inventories.description",
+        "inventories.category",
+        "inventories.status",
+        "inventories.quantity"
+      )
+      .where({ "inventories.id": req.params.id })
+      .first();
+
+    res.status(200).json(updatedItem);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Error updating inventory item.");
+
 const remove = async (req, res) => {
   try {
     console.log(`Attempting to remove id: ${req.params.id}`);
@@ -127,6 +164,7 @@ const add = async (req, res) => {
 module.exports = {
   index,
   findOne,
+  update,
   remove,
   add,
 };

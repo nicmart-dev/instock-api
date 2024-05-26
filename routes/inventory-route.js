@@ -11,4 +11,6 @@ router
   .get(inventoryController.findOne)
   .delete(inventoryController.remove); // get single inventory item
 
+router.route("/:id").put(inventoryController.update); // Add the PUT route
+
 module.exports = router;
