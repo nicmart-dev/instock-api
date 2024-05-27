@@ -65,7 +65,7 @@ const update = async (req, res) => {
                 category: req.body.category,
                 status: req.body.status,
                 quantity: req.body.quantity,
-                warehouse_id: req.body.warehouse_id,
+                warehouse_id: req.body.warehouse_id
             });
 
         if (updatedRows === 0) {
