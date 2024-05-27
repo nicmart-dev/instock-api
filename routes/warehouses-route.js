@@ -12,12 +12,7 @@ require("dotenv").config(); // Ensure environment variables are available
 const { PORT, BACKEND_URL, NODE_ENV } = process.env; // Destructure process.env
 
 router.route("/").get(warehouseController.index);
-
-router
-  .route("/:id")
-  .get(warehouseController.getWarehouseById)
-  .delete(warehouseController.remove)
-  .put(warehouseController.update);
+router.route("/:id").get(warehouseController.getWarehouseById).put(warehouseController.update).delete(warehouseController.remove);
 
 router.route("/:id/inventory").get(warehouseController.inventory);
 
